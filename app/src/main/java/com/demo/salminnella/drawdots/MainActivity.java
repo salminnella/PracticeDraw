@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     Bitmap bitmap;
     Canvas canvas;
     Paint paint;
-    float downx = 0, downy = 0, upx = 0, upy = 0;
+    float downx = 0, downy = 0, upx = 0, upy = 0, movex = 0, movey = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint = new Paint();
-        paint.setColor(Color.GREEN);
+        paint.setColor(Color.BLACK);
         imageView.setImageBitmap(bitmap);
 
         imageView.setOnTouchListener(this);
@@ -82,11 +82,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.d(TAG, "Action Move");
-                downx = event.getX();
-                downy = event.getY();
-                Log.d(TAG, "Move X = " + downx);
-                Log.d(TAG, "Move Y = " + downy);
-                canvas.drawCircle(downx, downy,1,paint);
+                movex = event.getX();
+                movey = event.getY();
+                Log.d(TAG, "Move X = " + movex);
+                Log.d(TAG, "Move Y = " + movey);
+//                canvas.drawCircle(movex, movey,15,paint);
+                canvas.drawLine(downx,downy,movex,movey,paint);
+                imageView.invalidate();
                 break;
             case MotionEvent.ACTION_UP:
                 Log.d(TAG, "Action Up");
