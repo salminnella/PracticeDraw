@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
+    private static final String TAG = "MainActivity";
     ImageView imageView;
     Bitmap bitmap;
     Canvas canvas;
@@ -44,51 +46,61 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
 
-        float startX = 0;
-        float startY = 0;
-        float endX = 0;
-        float endY = 0;
-
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                startX=event.getX();
-                startY=event.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                endX = event.getX();
-                endY = event.getY();
-                canvas.drawLine(startX,startY,endX,endY, paint);
-                imageView.invalidate();
-                startX=endX;
-                startY=endY;
-                break;
-            case MotionEvent.ACTION_UP:
-                break;
-            case MotionEvent.ACTION_CANCEL:
-                break;
-            default:
-                break;
-        }
-
+//        float startX = 0;
+//        float startY = 0;
+//        float endX = 0;
+//        float endY = 0;
+//
 //        switch (action) {
 //            case MotionEvent.ACTION_DOWN:
-//                downx = event.getX();
-//                downy = event.getY();
+//                startX=event.getX();
+//                startY=event.getY();
 //                break;
 //            case MotionEvent.ACTION_MOVE:
-//                canvas.drawCircle(downx, downy,1,paint);
+//                endX = event.getX();
+//                endY = event.getY();
+//                canvas.drawLine(startX,startY,endX,endY, paint);
+//                imageView.invalidate();
+//                startX=endX;
+//                startY=endY;
 //                break;
 //            case MotionEvent.ACTION_UP:
-//                upx = event.getX();
-//                upy = event.getY();
-//                canvas.drawLine(downx, downy, upx, upy, paint);
-//                imageView.invalidate();
 //                break;
 //            case MotionEvent.ACTION_CANCEL:
 //                break;
 //            default:
 //                break;
 //        }
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                Log.d(TAG, "Action Down");
+                downx = event.getX();
+                downy = event.getY();
+                Log.d(TAG, "Down X = " + downx);
+                Log.d(TAG, "Down Y = " + downy);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d(TAG, "Action Move");
+                downx = event.getX();
+                downy = event.getY();
+                Log.d(TAG, "Move X = " + downx);
+                Log.d(TAG, "Move Y = " + downy);
+                canvas.drawCircle(downx, downy,1,paint);
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d(TAG, "Action Up");
+//                upx = event.getX();
+//                upy = event.getY();
+//                canvas.drawLine(downx, downy, upx, upy, paint);
+//                imageView.invalidate();
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                Log.d(TAG, "Action Cancel");
+                break;
+            default:
+                break;
+        }
         return true;
 
     }
