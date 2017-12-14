@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,10 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         imageView = (ImageView) this.findViewById(R.id.imageView1);
 
         Display currentDisplay = getWindowManager().getDefaultDisplay();
-        float dw = currentDisplay.getWidth();
-        float dh = currentDisplay.getHeight();
+        Point size = new Point();
+        currentDisplay.getSize(size);
+        int width = size.x;
+        int height = size.y;
 
-        bitmap = Bitmap.createBitmap((int) dw, (int) dh,
+        bitmap = Bitmap.createBitmap((int) width, (int) height,
                 Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint = new Paint();
@@ -40,6 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         imageView.setImageBitmap(bitmap);
 
         imageView.setOnTouchListener(this);
+
+        drawPoints();
+    }
+
+    private void drawPoints() {
+        canvas.drawCircle(20, 60,15,paint);
+        canvas.drawCircle(20, 120,15,paint);
     }
 
     @Override
@@ -87,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 Log.d(TAG, "Move X = " + movex);
                 Log.d(TAG, "Move Y = " + movey);
 //                canvas.drawCircle(movex, movey,15,paint);
-                canvas.drawLine(downx,downy,movex,movey,paint);
+                canvas.drawLine(20,60,movex,movey,paint);
                 imageView.invalidate();
                 break;
             case MotionEvent.ACTION_UP:
@@ -96,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 //                upy = event.getY();
 //                canvas.drawLine(downx, downy, upx, upy, paint);
 //                imageView.invalidate();
+
+
                 break;
             case MotionEvent.ACTION_CANCEL:
                 Log.d(TAG, "Action Cancel");
